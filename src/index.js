@@ -48,12 +48,16 @@ pictureEl.setAttribute("hidden", true)
                 <p>${findById.temperament}</p>
                 </div>`
                     pictureEl.insertAdjacentHTML("beforeend", markup)
-                    if(data.length === 0) {
-                        onFetchError
-                    }
+                    
             });
-            
+           
         })
+        if(data.length === 0) {
+            Notify.failure(errorEl.textContent, {
+                position: 'center-center',
+                fontSize: '30px'
+            })
+        }
     })
     .catch(onFetchError)
     .finally(() => 
