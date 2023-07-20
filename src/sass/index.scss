@@ -2,4 +2,9 @@
 @import './example';
 .cats {
   object-fit: cover;
+  margin-top: 20px;
+}
+
+.cat-info {
+    display: flex;
 }
