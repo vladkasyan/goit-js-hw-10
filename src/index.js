@@ -9,20 +9,31 @@ const loaderEl = document.querySelector(".loader");
 const errorEl = document.querySelector(".error");
 const pictureEl = document.querySelector(".cat-info");
 
+selectEl.setAttribute('hidden', true)
 fetchBreeds()
 .then(data => {
+    
     console.log(data);
     selectEl.innerHTML = data.map(Element => `<option value="${Element.id}">${Element.name}</option>`).join("")
 })
-.catch(() => errorEl.removeAttribute("hidden"))
-.finally(() => loaderEl.setAttribute("hidden", true))
+.catch(onFetchError)
+.finally(
+    () => {
+    loaderEl.setAttribute("hidden", true)
+    selectEl.removeAttribute('hidden')
+    }
+)
 
 selectEl.addEventListener("change", onChange)   
 
 function onChange(event){
 loaderEl.removeAttribute("hidden")
+selectEl.setAttribute("hidden", true)
+pictureEl.setAttribute("hidden", true)
     fetchCatByBreed(event.target.value)
     .then(data =>   {
+        selectEl.removeAttribute("hidden")
+        pictureEl.removeAttribute("hidden")
         const img = data.map(element => 
         `<img src="${element.url}" alt="cat" width="400" height="400">`).join("")
         pictureEl.innerHTML = img
@@ -40,10 +51,18 @@ loaderEl.removeAttribute("hidden")
             });
         })
     })
-    .catch(() => 
-        errorEl.removeAttribute("hidden")
-    )
+    .catch(onFetchError)
     .finally(() => 
     loaderEl.setAttribute("hidden", true)
     )
+}
+
+function onFetchError () {
+    selectEl.removeAttribute('hidden');
+    loaderEl.removeAttribute('hidden');
+
+    Notify.failure(errorEl.textContent, {
+        position: 'center-center',
+        fontSize: '30px'
+    })
 }
