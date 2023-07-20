@@ -35,7 +35,7 @@ pictureEl.setAttribute("hidden", true)
         selectEl.removeAttribute("hidden")
         pictureEl.removeAttribute("hidden")
         const img = data.map(element => 
-        `<img src="${element.url}" alt="cat" width="400" height="400">`).join("")
+        `<img src="${element.url}" alt="cat" width="400" height="400" class="cats">`).join("")
         pictureEl.innerHTML = img
         data.map(element => {
             element.breeds.forEach(cat => {
@@ -48,7 +48,11 @@ pictureEl.setAttribute("hidden", true)
                 <p>${findById.temperament}</p>
                 </div>`
                     pictureEl.insertAdjacentHTML("beforeend", markup)
+                    if(data.length === 0) {
+                        onFetchError
+                    }
             });
+            
         })
     })
     .catch(onFetchError)
