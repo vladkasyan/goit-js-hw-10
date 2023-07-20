@@ -28,7 +28,7 @@ selectEl.addEventListener("change", onChange)
 
 function onChange(event){
 loaderEl.removeAttribute("hidden")
-selectEl.setAttribute("hidden", true)
+// selectEl.setAttribute("hidden", true)
 pictureEl.setAttribute("hidden", true)
     fetchCatByBreed(event.target.value)
     .then(data =>   {
