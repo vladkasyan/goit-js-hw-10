@@ -12,7 +12,6 @@ const pictureEl = document.querySelector(".cat-info");
 selectEl.setAttribute('hidden', true)
 fetchBreeds()
 .then(data => {
-    
     console.log(data);
     selectEl.innerHTML = data.map(Element => `<option value="${Element.id}">${Element.name}</option>`).join("")
 })
@@ -23,17 +22,17 @@ fetchBreeds()
     selectEl.removeAttribute('hidden')
     }
 )
-
+pictureEl.classList.add('is-hidden');
 selectEl.addEventListener("change", onChange)   
 
 function onChange(event){
 loaderEl.removeAttribute("hidden")
 // selectEl.setAttribute("hidden", true)
-pictureEl.setAttribute("hidden", true)
+pictureEl.classList.add('is-hidden');
     fetchCatByBreed(event.target.value)
     .then(data =>   {
         selectEl.removeAttribute("hidden")
-        pictureEl.removeAttribute("hidden")
+       
         const img = data.map(element => 
         `<img src="${element.url}" alt="cat" width="400" height="400" class="cats">`).join("")
         pictureEl.innerHTML = img
@@ -58,10 +57,12 @@ pictureEl.setAttribute("hidden", true)
                 fontSize: '30px'
             })
         }
+        pictureEl.classList.remove('is-hidden');
     })
     .catch(onFetchError)
-    .finally(() => 
-    loaderEl.setAttribute("hidden", true)
+    .finally(() => {
+        loaderEl.setAttribute("hidden", true)
+    }
     )
 }
 
