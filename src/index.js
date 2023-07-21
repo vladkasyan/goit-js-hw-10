@@ -68,7 +68,6 @@ pictureEl.classList.add('is-hidden');
 
 function onFetchError () {
     selectEl.removeAttribute('hidden');
-    loaderEl.removeAttribute('hidden');
 
     Notify.failure(errorEl.textContent, {
         position: 'center-center',
